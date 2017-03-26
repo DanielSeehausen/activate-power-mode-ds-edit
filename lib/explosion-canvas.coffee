@@ -64,7 +64,7 @@ module.exports =
     x = screenPosition[0]
     y = screenPosition[1]
     spriteSheet = @explosionSpriteSheet
-    size = 2.0
+    size = 1.5
     @explosions.push {x: x, y: y, sizeMod: size, frame:  0}
 
   spawnRandomSizeExplosion: (screenPosition) ->

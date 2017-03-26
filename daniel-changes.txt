@@ -11,6 +11,7 @@
   * max power implemented
     * when true, the counter and bar transition colors and glow
     * counter and bar have separate keyframe functions as one uses the background color/box shadow and the other uses text color/shadow
+  * explosions about to be implemented
 
 ## Minor Edits
   * particle default set to random
@@ -23,4 +24,6 @@
   * add fade out on number and bar
   * make upper/lower bounds of text alterable in config
   * once @ max color on counter it should interpolate glow
-  #change power/acc/benchmark to power everywhere
+  * change power/acc/benchmark to power everywhere
+  * finish explosion sprite
+  * reference original author and submit pull request for the base stuff
