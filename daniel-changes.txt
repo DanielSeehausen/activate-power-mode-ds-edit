@@ -1,0 +1,26 @@
+### Daniel Edits
+  * avg. streak implemented and displayed
+  * power benchmarking implemented (currentStreak/avgStreak)
+    * screen shake severity now proportional to power (still max/min @ user set boundaries)
+    * num of particles now proportional to power (still max/min @ user set boundaries)
+    * particle color saturation now proportional to power (with a floor set)
+    * combo counter size now proportional to power with upper/lower bounds set to 30/120px
+    * combo counter color now proportional to power
+    * bar set to use same color transitions
+    * added getComboCountColor() and its helper function interpolateColor to color-helper
+  * max power implemented
+    * when true, the counter and bar transition colors and glow
+    * counter and bar have separate keyframe functions as one uses the background color/box shadow and the other uses text color/shadow
+
+## Minor Edits
+  * particle default set to random
+  * minor css changes to #streak-container
+  * case for all particle color choices added
+
+### to do:
+  * refactor the avg combo bits
+  * add power setting toggle in config (either fix it at 1 via setting or leave it dynamic)
+  * add fade out on number and bar
+  * make upper/lower bounds of text alterable in config
+  * once @ max color on counter it should interpolate glow
+  #change power/acc/benchmark to power everywhere
