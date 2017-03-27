@@ -102,9 +102,9 @@ module.exports =
     @container.classList.remove "reached"
     @renderStreak()
 
-  renderExplosion: ->
-    explosionCanvas.spawnBigExplosion([500, 500])
-    explosionCanvas.animationOn()
+  # renderExplosion: ->
+  #   explosionCanvas.spawnBigExplosion([100, 100])
+  #   explosionCanvas.animationOn()
 
   renderStreak: ->
     @counter.textContent = @currentStreak
@@ -116,7 +116,6 @@ module.exports =
     @counter.style.color = @bar.style.background = comboColor
 
     if !@atMaxPower && b > @maximumPower
-      @renderExplosion()
       @atMaxPower = true
       @counter.classList.add "shimmer"
       @bar.classList.add "shimmer"
