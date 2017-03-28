@@ -2,7 +2,7 @@ debounce = require "lodash.debounce"
 defer = require "lodash.defer"
 sample = require "lodash.sample"
 colorHelper = require "./color-helper"
-explosionCanvas = require "./explosion-canvas"
+explosionsCanvas = require "./explosion-canvas"
 
 module.exports =
   currentStreak: 0
@@ -38,6 +38,7 @@ module.exports =
       @max = @createElement "max", @container
       @avg = @createElement "avg", @container
       @counter = @createElement "counter", @container
+      @counter.setAttribute("id", "combo-counter")
       @bar = @createElement "bar", @container
       @exclamations = @createElement "exclamations", @container
       @maximumPower = 1.8
@@ -102,9 +103,7 @@ module.exports =
     @container.classList.remove "reached"
     @renderStreak()
 
-  # renderExplosion: ->
-  #   explosionCanvas.spawnBigExplosion([100, 100])
-  #   explosionCanvas.animationOn()
+  temper: 0
 
   renderStreak: ->
     @counter.textContent = @currentStreak
@@ -114,11 +113,12 @@ module.exports =
     @counter.style.fontSize = if b*80 < 30 then "30px" else if b*80 > 120 then "120px" else "#{b*80}px"
     comboColor = colorHelper.getComboCountColor(b)
     @counter.style.color = @bar.style.background = comboColor
+    @temper++
 
     if !@atMaxPower && b > @maximumPower
+      explosionsCanvas.maxPowerExplosion()
       @atMaxPower = true
       @counter.classList.add "shimmer"
-      @bar.classList.add "shimmer"
 
     @counter.classList.remove "bump"
     defer =>
