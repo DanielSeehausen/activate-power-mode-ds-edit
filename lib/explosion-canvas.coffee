@@ -109,17 +109,17 @@ module.exports =
     @updateExplosion(e, i) for e, i in @explosions
     @animationFrame = requestAnimationFrame @drawExplosions.bind(this)
 
-  getComboCounterLoc: ->
-    #TODO need a resize function that updates positions, until then, this will remain as fixed
-    # ccBCR = document.getElementById('explosion-canvas').getBoundingClientRect()
-    x = window.innerWidth - 440
-    y = 85
-    return [x, y]
+  # getComboCounterLoc: ->
+  #   #TODO need a resize function that updates positions, until then, this will remain as fixed
+  #   # ccBCR = document.getElementById('explosion-canvas').getBoundingClientRect()
+  #   x = window.innerWidth - 440
+  #   y = 85
+  #   return [x, y]
 
   getComboClusterLocs: ->
     #TODO stop using this crap placeholder and swap back to the random loc generator
     # x, y loc of middle of combo counter at full size
-    x = window.innerWidth - 400
+    x = window.innerWidth - 550
     y = 85
     return [[x - 20, y - 15],
             [x + 80, y + 20],
@@ -142,7 +142,3 @@ module.exports =
 
   getConfig: (config) ->
     atom.config.get "activate-power-mode.explosions.#{config}"
-
-#TODO remove me
-window.addEventListener 'resize', (event) ->
-  console.log(window.innerWidth)

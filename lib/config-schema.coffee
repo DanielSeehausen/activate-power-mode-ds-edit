@@ -92,8 +92,9 @@ module.exports =
         title: "Play Audio - Audioclip"
         description: "Which audio clip played at keystroke."
         type: "string"
-        default: '../audioclips/gun.wav'
+        default: '../audioclips/typewriter.wav'
         enum: [
+          {value: '../audioclips/sh-yes.wav', description: 'Stephen Hawking Yes'}
           {value: '../audioclips/gun.wav', description: 'Gun'}
           {value: '../audioclips/typewriter.wav', description: 'Type Writer'}
           {value: 'customAudioclip', description: 'Custom Path'}

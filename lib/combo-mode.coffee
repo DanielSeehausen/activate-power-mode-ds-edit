@@ -3,6 +3,7 @@ defer = require "lodash.defer"
 sample = require "lodash.sample"
 colorHelper = require "./color-helper"
 explosionsCanvas = require "./explosion-canvas"
+audio = require "./play-audio"
 
 module.exports =
   currentStreak: 0
@@ -73,27 +74,22 @@ module.exports =
     @lastStreak = performance.now()
     @debouncedEndStreak()
     @currentStreak++
-
     @container.classList.remove "combo-zero"
     if @currentStreak > @maxStreak
       @increaseMaxStreak()
-
     @showExclamation() if @currentStreak > 0 and @currentStreak % @getConfig("exclamationEvery") is 0
-
     if @currentStreak >= @getConfig("activationThreshold") and not @reached
       @reached = true
       @container.classList.add "reached"
-
     @refreshStreakBar()
     @renderStreak()
-
-
 
   endStreak: ->
     if @currentStreak > 5
       @updateAvgStreak()
     @currentStreak = 0
     if @atMaxPower
+      audio.playClip('sn-unconscious-incompetence')
       @counter.classList.remove "shimmer"
       @bar.classList.remove "shimmer"
     @atMaxPower = false
@@ -103,8 +99,6 @@ module.exports =
     @container.classList.remove "reached"
     @renderStreak()
 
-  temper: 0
-
   renderStreak: ->
     @counter.textContent = @currentStreak
     b = @getBenchmark()
@@ -113,12 +107,13 @@ module.exports =
     @counter.style.fontSize = if b*80 < 30 then "30px" else if b*80 > 120 then "120px" else "#{b*80}px"
     comboColor = colorHelper.getComboCountColor(b)
     @counter.style.color = @bar.style.background = comboColor
-    @temper++
 
     if !@atMaxPower && b > @maximumPower
       explosionsCanvas.maxPowerExplosion()
+      audio.playClip('ludicrous-kill')
       @atMaxPower = true
       @counter.classList.add "shimmer"
+      @bar.classList.add "shimmer"
 
     @counter.classList.remove "bump"
     defer =>

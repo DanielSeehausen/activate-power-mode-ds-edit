@@ -14,7 +14,7 @@ module.exports =
 
   enable: ->
     @throttledShake = throttle @screenShake.shake.bind(@screenShake), 100, trailing: false
-    @throttledPlayAudio = throttle @playAudio.play.bind(@playAudio), 100, trailing: false
+    @throttledPlayAudio = throttle @playAudio.playInputSound.bind(@playAudio), 100, trailing: false
 
     @activeItemSubscription = atom.workspace.onDidStopChangingActivePaneItem =>
       @subscribeToActiveTextEditor()
