@@ -1,20 +1,19 @@
-# See https://atom.io/docs/latest/hacking-atom-package-word-count#menus for more details
 'context-menu':
   'atom-text-editor': [
     {
-      'label': 'Toggle Power Mode'
-      'command': 'activate-power-mode:toggle'
+      'label': 'Toggle Bedlam Mode'
+      'command': 'activate-bedlam-mode:toggle'
     }
   ]
 'menu': [
   {
     'label': 'Packages'
     'submenu': [
-      'label': 'Activate Power Mode'
+      'label': 'Activate Bedlam Mode'
       'submenu': [
         {
           'label': 'Toggle'
-          'command': 'activate-power-mode:toggle'
+          'command': 'activate-bedlam-mode:toggle'
         }
       ]
     ]

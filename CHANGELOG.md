@@ -1,3 +1,23 @@
+### 2.0.0 2017-03-28
+* avg. streak implemented and displayed
+* power benchmarking implemented (currentStreak/avgStreak)
+  * screen shake severity now proportional to power (still max/min @ user set boundaries)
+  * num of particles now proportional to power (still max/min @ user set boundaries)
+  * particle color saturation now proportional to power (with a floor set)
+  * combo counter size now proportional to power with upper/lower bounds set to 30/120px
+  * combo counter color now proportional to power
+  * bar set to use same color transitions
+  * added getComboCountColor() and its helper function interpolateColor to color-helper
+* max power implemented
+  * when true, the counter and bar transition colors and glow
+  * counter and bar have separate keyframe functions as one uses the background color/box shadow and the other uses text color/shadow
+* explosions canvas added
+  * cluster of explosions occurs when the combo css transitions to neon
+  * can be implemented anywhere else as well
+* additional sound effects added
+
+#RECREATED AS ACTIVATE-BEDLAM-NODE
+
 ### 1.4.0 2017-03-19
 * Some performance improvements
 * Fix rare bug with combo exclamations
@@ -63,7 +83,7 @@
 * Add better color detection to prevent getting gray particles when writing at the end of the line
 
 ### 0.6.0 2016-06-30
-* Code refactor, no user-facing changes. 
+* Code refactor, no user-facing changes.
 
 ### 0.5.2 2016-05-03
 * Properly dispose event listeners when disabling the plugin.

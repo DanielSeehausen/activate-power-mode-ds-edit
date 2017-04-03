@@ -9,6 +9,8 @@ module.exports =
   currentStreak: 0
   reached: false
   maxStreakReached: false
+  prevClipPlayedAt: 0
+  clipDelta: 15
 
   reset: ->
     @container?.parentNode?.removeChild @container
@@ -42,7 +44,7 @@ module.exports =
       @counter.setAttribute("id", "combo-counter")
       @bar = @createElement "bar", @container
       @exclamations = @createElement "exclamations", @container
-      @maximumPower = 1.8
+      @maximumPower = 1.8 # currStreak/avgStreak
       @atMaxPower = false
 
       @avgStreak = @updateAvgStreak()
@@ -59,22 +61,41 @@ module.exports =
       @opacityObserver?.dispose()
       @opacityObserver = atom.config.observe 'activate-power-mode.comboMode.opacity', (value) =>
         @container?.style.opacity = value
-
     @exclamations.innerHTML = ''
-
     editorElement.querySelector(".scroll-view").appendChild @container
-
     if @currentStreak
       leftTimeout = @streakTimeout - (performance.now() - @lastStreak)
       @refreshStreakBar leftTimeout
-
     @renderStreak()
+
+  manageEncouragement: ->
+    if (@currentStreak > (@prevClipPlayedAt + @clipDelta))
+      b = @getBenchmark()
+      switch
+        when (b > 1.7)
+          audio.playRandomAudioClip('longP', 1.5)
+        when (b > 1.5)
+          audio.playRandomAudioClip('longP', 1.3)
+        when (b > 1.3)
+          audio.playRandomAudioClip('shortP', 1.1)
+        when (b > 1.1)
+          audio.playRandomAudioClip('shortP', 1.0)
+        when (b > 0.9)
+          audio.playRandomAudioClip('shortP', 1.0)
+      @prevClipPlayedAt = @currentStreak
+
+  manageDerision: ->
+    if @atMaxPower
+      audio.playClip('combo-breaker')
+    else if @currentStreak > 10
+      audio.playRandomAudioClip('neg', 2.5)
 
   increaseStreak: ->
     @lastStreak = performance.now()
     @debouncedEndStreak()
     @currentStreak++
     @container.classList.remove "combo-zero"
+    @manageEncouragement()
     if @currentStreak > @maxStreak
       @increaseMaxStreak()
     @showExclamation() if @currentStreak > 0 and @currentStreak % @getConfig("exclamationEvery") is 0
@@ -85,22 +106,21 @@ module.exports =
     @renderStreak()
 
   endStreak: ->
-    if @currentStreak > 5
-      @updateAvgStreak()
-    @currentStreak = 0
+    if @currentStreak > 5 then @updateAvgStreak()
+    @manageDerision()
+    audio.refreshClips()
+    @currentStreak = @prevClipPlayedAt = 0
     if @atMaxPower
-      audio.playClip('sn-unconscious-incompetence')
       @counter.classList.remove "shimmer"
       @bar.classList.remove "shimmer"
-    @atMaxPower = false
-    @reached = false
-    @maxStreakReached = false
+    @atMaxPower = @reached = @maxStreakReached = false
     @container.classList.add "combo-zero"
     @container.classList.remove "reached"
     @renderStreak()
 
   renderStreak: ->
     @counter.textContent = @currentStreak
+    #TODO can just make the variable an invoking function
     b = @getBenchmark()
     @counter.style.opacity = if (b > 1.2) then 1 else ((b * .5) + .4)
     @bar.style.opacity = if (b > 1.2) then 1 else ((b * .5) + .4)
@@ -110,7 +130,7 @@ module.exports =
 
     if !@atMaxPower && b > @maximumPower
       explosionsCanvas.maxPowerExplosion()
-      audio.playClip('ludicrous-kill')
+      audio.playClip('explosion')
       @atMaxPower = true
       @counter.classList.add "shimmer"
       @bar.classList.add "shimmer"

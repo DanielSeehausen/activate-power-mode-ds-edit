@@ -119,7 +119,7 @@ module.exports =
   getComboClusterLocs: ->
     #TODO stop using this crap placeholder and swap back to the random loc generator
     # x, y loc of middle of combo counter at full size
-    x = window.innerWidth - 550
+    x = window.innerWidth - 375
     y = 85
     return [[x - 20, y - 15],
             [x + 80, y + 20],

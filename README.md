@@ -1,4 +1,29 @@
-# Activate Power Mode
+
+
+
+# Activate Bedlam Mode
+
+Built off of Joel Besada's activate-power-mode. Bedlam mode differs in the following ways:
+
+### Bedlam changes
+* avg. streak implemented and displayed
+* power benchmarking implemented (currentStreak/avgStreak)
+  * screen shake severity now proportional to power (still max/min @ user set boundaries)
+  * num of particles now proportional to power (still max/min @ user set boundaries)
+  * particle color saturation now proportional to power (with a floor set)
+  * combo counter size now proportional to power with upper/lower bounds set to 30/120px
+  * combo counter color now proportional to power
+  * bar set to use same color transitions
+  * added getComboCountColor() and its helper function interpolateColor to color-helper
+* max power implemented
+  * when true, the counter and bar transition colors and glow
+  * counter and bar have separate keyframe functions as one uses the background color/box shadow and the other uses text color/shadow
+* explosions canvas added
+  * cluster of explosions occurs when the combo css transitions to neon
+  * can be implemented anywhere else as well
+* additional sound effects added
+
+#
 
 A package for Atom to replicate the effects from [codeinthedark/editor](https://github.com/codeinthedark/editor).
 
